@@ -3,7 +3,7 @@ name: Deploy Astro (mscrya)
 on:
   push:
     branches: ["main"]
-
+  workflow_dispatch:
 jobs:
   deploy:
     runs-on: [self-hosted, astro]
