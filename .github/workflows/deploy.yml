@@ -34,8 +34,11 @@ jobs:
       - name: Deploy dist to server
         shell: bash
         run: |
-            HOST="${{ secrets.DEPLOY_HOST }}"
-            USER="${{ secrets.DEPLOY_USER }}"
-            PATH_="${{ secrets.DEPLOY_PATH }}"
-            echo "Deploying to: $USER@$HOST:$PATH_"
-            rsync -avz --delete -e "ssh -i ~/.ssh/id_ed25519" dist/ "$USER@$HOST:$PATH_/"
+          set -e
+          HOST="$(echo "${{ secrets.DEPLOY_HOST }}" | tr -d '\r\n' | xargs)"
+          USER="$(echo "${{ secrets.DEPLOY_USER }}" | tr -d '\r\n' | xargs)"
+          PATH_="$(echo "${{ secrets.DEPLOY_PATH }}" | tr -d '\r\n' | xargs)"
+          
+          echo "Deploying to: ${USER}@${HOST}:${PATH_}"
+          
+          rsync -avz --delete -e "ssh -i ~/.ssh/id_ed25519" dist/ "${USER}@${HOST}:${PATH_}/"
