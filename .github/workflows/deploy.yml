@@ -34,5 +34,8 @@ jobs:
       - name: Deploy dist to server
         shell: bash
         run: |
-          rsync -avz --delete -e "ssh -i ~/.ssh/id_ed25519" dist/ \
-            "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}/"
+            HOST="${{ secrets.DEPLOY_HOST }}"
+            USER="${{ secrets.DEPLOY_USER }}"
+            PATH_="${{ secrets.DEPLOY_PATH }}"
+            echo "Deploying to: $USER@$HOST:$PATH_"
+            rsync -avz --delete -e "ssh -i ~/.ssh/id_ed25519" dist/ "$USER@$HOST:$PATH_/"
