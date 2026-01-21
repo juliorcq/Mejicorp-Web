@@ -17,6 +17,14 @@ jobs:
         id: build_step
         shell: bash
         run: |
+          # --- VALIDACIÓN DE REPOSITORIO VACÍO ---
+          # Si no existe index.html y tampoco package.json, detenemos el proceso.
+          if [ ! -f "package.json" ] && [ ! -f "index.html" ]; then
+            echo "ERROR: No se detectaron archivos para publicar (index.html o package.json)."
+            echo "El deploy se detendrá para evitar errores en el servidor."
+            exit 1
+          fi
+
           if [ -f "package.json" ]; then
             echo "--- MODO ASTRO ---"
             npm ci && npm run build
@@ -53,7 +61,7 @@ jobs:
           USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
           HOST=$(echo "${{ secrets.DEPLOY_HOST }}" | xargs)
           
-          # Ruta  /home/usuario/Sitio
+          # Ruta /home/usuario/Sitio
           ssh -i ~/.ssh/id_ed25519 ${USER}@${HOST} "mkdir -p ~/Sitio"
           
           rsync -avz --delete \
@@ -66,5 +74,5 @@ jobs:
         run: |
           USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
           HOST=$(echo "${{ secrets.DEPLOY_HOST }}" | xargs)
-          # Ajustamos permisos solo en las rutas de mscrya
+          # Ajustamos permisos finales
           ssh -i ~/.ssh/id_ed25519 ${USER}@${HOST} "chmod -R 755 /var/www/astro-site ~/Sitio"
