@@ -53,7 +53,7 @@ jobs:
           USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
           HOST=$(echo "${{ secrets.DEPLOY_HOST }}" | xargs)
           
-          # Usamos una ruta donde NO necesitamos sudo: /home/usuario/Sitio
+          # Ruta  /home/usuario/Sitio
           ssh -i ~/.ssh/id_ed25519 ${USER}@${HOST} "mkdir -p ~/Sitio"
           
           rsync -avz --delete \
