@@ -1,1 +1,0 @@
-Mejicorp Web (Astro)
