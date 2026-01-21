@@ -17,11 +17,9 @@ jobs:
         id: build_step
         shell: bash
         run: |
-          # --- CORRECCIÓN: VALIDACIÓN DE REPOSITORIO ---
-          # Se detiene si NO existe index.html Y NO existe package.json
-          if [ ! -f "index.html" ] && [ ! -f "package.json" ]; then
-            echo "ERROR: No se detectaron archivos para publicar (index.html o package.json)."
-            echo "El deploy se detendrá automáticamente."
+          # --- VALIDACIÓN DE ARCHIVOS ---
+          if [ ! -f "package.json" ] && [ ! -f "index.html" ]; then
+            echo "AVISO: No hay archivos para publicar. Se detiene el proceso de forma segura."
             exit 1
           fi
 
@@ -61,7 +59,6 @@ jobs:
           USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
           HOST=$(echo "${{ secrets.DEPLOY_HOST }}" | xargs)
           
-          # Ruta /home/usuario/Sitio
           ssh -i ~/.ssh/id_ed25519 ${USER}@${HOST} "mkdir -p ~/Sitio"
           
           rsync -avz --delete \
@@ -74,5 +71,4 @@ jobs:
         run: |
           USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
           HOST=$(echo "${{ secrets.DEPLOY_HOST }}" | xargs)
-          # Ajustamos permisos finales
           ssh -i ~/.ssh/id_ed25519 ${USER}@${HOST} "chmod -R 755 /var/www/astro-site ~/Sitio"
