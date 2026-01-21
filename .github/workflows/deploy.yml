@@ -37,7 +37,6 @@ jobs:
       - name: 1. Deploy to Web (Publicación)
         shell: bash
         run: |
-          # Limpiamos variables para evitar errores de sintaxis
           USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
           HOST=$(echo "${{ secrets.DEPLOY_HOST }}" | xargs)
           
@@ -54,8 +53,9 @@ jobs:
           USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
           HOST=$(echo "${{ secrets.DEPLOY_HOST }}" | xargs)
           
-          # Crear carpeta con sudo si es necesario y dar permisos al usuario
-          ssh -i ~/.ssh/id_ed25519 ${USER}@${HOST} "sudo mkdir -p /opt/Sitio && sudo chown -R ${USER}:${USER} /opt/Sitio"
+          # Intentamos crear la carpeta sin sudo. 
+          # Si falla por permisos, deberás dar permiso a mscrya en /opt una sola vez manualmente.
+          ssh -i ~/.ssh/id_ed25519 ${USER}@${HOST} "mkdir -p /opt/Sitio"
           
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
