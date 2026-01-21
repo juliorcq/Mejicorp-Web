@@ -17,11 +17,11 @@ jobs:
         id: build_step
         shell: bash
         run: |
-          # --- VALIDACIÓN DE REPOSITORIO VACÍO ---
-          # Si no existe index.html y tampoco package.json, detenemos el proceso.
-          if [ ! -f "package.json" ] && [ ! -f "index.html" ]; then
+          # --- CORRECCIÓN: VALIDACIÓN DE REPOSITORIO ---
+          # Se detiene si NO existe index.html Y NO existe package.json
+          if [ ! -f "index.html" ] && [ ! -f "package.json" ]; then
             echo "ERROR: No se detectaron archivos para publicar (index.html o package.json)."
-            echo "El deploy se detendrá para evitar errores en el servidor."
+            echo "El deploy se detendrá automáticamente."
             exit 1
           fi
 
