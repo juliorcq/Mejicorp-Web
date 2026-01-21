@@ -17,22 +17,26 @@ jobs:
         id: build_step
         shell: bash
         run: |
-          # --- VALIDACIÓN DE ARCHIVOS ---
+          # --- SOLO CAMBIÓ ESTA PARTE PARA EVITAR EL CÍRCULO ROJO ---
           if [ ! -f "package.json" ] && [ ! -f "index.html" ]; then
-            echo "AVISO: No hay archivos para publicar. Se detiene el proceso de forma segura."
-            exit 1
-          fi
-
-          if [ -f "package.json" ]; then
-            echo "--- MODO ASTRO ---"
-            npm ci && npm run build
-            echo "WEB_SOURCE=dist/" >> $GITHUB_ENV
+            echo "REPOSITORIO VACÍO: No hay archivos web. Saltando publicación."
+            echo "HAS_FILES=false" >> $GITHUB_ENV
           else
-            echo "--- MODO ESTÁTICO ---"
-            echo "WEB_SOURCE=./" >> $GITHUB_ENV
+            echo "HAS_FILES=true" >> $GITHUB_ENV
+            if [ -f "package.json" ]; then
+              echo "--- MODO ASTRO ---"
+              npm ci && npm run build
+              echo "WEB_SOURCE=dist/" >> $GITHUB_ENV
+            else
+              echo "--- MODO ESTÁTICO ---"
+              echo "WEB_SOURCE=./" >> $GITHUB_ENV
+            fi
           fi
 
+      # --- EL RESTO DEL CÓDIGO ES EL MISMO QUE ME PASASTE ---
+      
       - name: Setup SSH
+        if: env.HAS_FILES == 'true'
         shell: bash
         run: |
           mkdir -p ~/.ssh
@@ -41,6 +45,7 @@ jobs:
           ssh-keyscan -H "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
 
       - name: 1. Deploy to Web (Publicación)
+        if: env.HAS_FILES == 'true'
         shell: bash
         run: |
           USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
@@ -54,6 +59,7 @@ jobs:
             ${{ env.WEB_SOURCE }} ${USER}@${HOST}:/var/www/astro-site/
 
       - name: 2. Sync Source Code to Home (Almacén)
+        if: env.HAS_FILES == 'true'
         shell: bash
         run: |
           USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
@@ -67,6 +73,7 @@ jobs:
             ./ ${USER}@${HOST}:~/Sitio/
 
       - name: Fix Permissions
+        if: env.HAS_FILES == 'true'
         shell: bash
         run: |
           USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
