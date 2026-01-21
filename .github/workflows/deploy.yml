@@ -65,4 +65,4 @@ jobs:
           HOST=$(echo "${{ secrets.DEPLOY_HOST }}" | xargs)
           USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
           # Aseguramos que los archivos pertenezcan al usuario y sean legibles
-          ssh -i ~/.ssh/id_ed25519 "${USER}@${HOST}" "sudo chown -R mscrya:mscrya /var/www/astro-site && chmod -R 755 /var/www/astro-site"
+          ssh -i ~/.ssh/id_ed25519 "${USER}@${HOST}" "chmod -R 755 /var/www/astro-site"
