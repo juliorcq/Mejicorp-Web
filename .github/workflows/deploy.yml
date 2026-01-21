@@ -17,7 +17,7 @@ jobs:
         id: build_step
         shell: bash
         run: |
-          # --- SOLO CAMBIÓ ESTA PARTE PARA EVITAR EL CÍRCULO ROJO ---
+
           if [ ! -f "package.json" ] && [ ! -f "index.html" ]; then
             echo "REPOSITORIO VACÍO: No hay archivos web. Saltando publicación."
             echo "HAS_FILES=false" >> $GITHUB_ENV
@@ -32,8 +32,6 @@ jobs:
               echo "WEB_SOURCE=./" >> $GITHUB_ENV
             fi
           fi
-
-      # --- EL RESTO DEL CÓDIGO ES EL MISMO QUE ME PASASTE ---
       
       - name: Setup SSH
         if: env.HAS_FILES == 'true'
