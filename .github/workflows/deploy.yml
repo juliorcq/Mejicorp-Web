@@ -47,24 +47,24 @@ jobs:
             --exclude 'node_modules/' \
             ${{ env.WEB_SOURCE }} ${USER}@${HOST}:/var/www/astro-site/
 
-      - name: 2. Sync Source Code to /opt/Sitio (Almacén)
+      - name: 2. Sync Source Code to Home (Almacén)
         shell: bash
         run: |
           USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
           HOST=$(echo "${{ secrets.DEPLOY_HOST }}" | xargs)
           
-          # Intentamos crear la carpeta sin sudo. 
-          # Si falla por permisos, deberás dar permiso a mscrya en /opt una sola vez manualmente.
-          ssh -i ~/.ssh/id_ed25519 ${USER}@${HOST} "mkdir -p /opt/Sitio"
+          # Usamos una ruta donde NO necesitamos sudo: /home/usuario/Sitio
+          ssh -i ~/.ssh/id_ed25519 ${USER}@${HOST} "mkdir -p ~/Sitio"
           
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
             --exclude '.git/' \
-            ./ ${USER}@${HOST}:/opt/Sitio/
+            ./ ${USER}@${HOST}:~/Sitio/
 
       - name: Fix Permissions
         shell: bash
         run: |
           USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
           HOST=$(echo "${{ secrets.DEPLOY_HOST }}" | xargs)
-          ssh -i ~/.ssh/id_ed25519 ${USER}@${HOST} "chmod -R 755 /var/www/astro-site /opt/Sitio"
+          # Ajustamos permisos solo en las rutas de mscrya
+          ssh -i ~/.ssh/id_ed25519 ${USER}@${HOST} "chmod -R 755 /var/www/astro-site ~/Sitio"
