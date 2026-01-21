@@ -1,4 +1,4 @@
-name: Universal Deploy & Source Backup
+name: Publicación Automática de Página Web
 
 on:
   push:
