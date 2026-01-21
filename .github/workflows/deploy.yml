@@ -37,27 +37,34 @@ jobs:
       - name: 1. Deploy to Web (Publicación)
         shell: bash
         run: |
-          # Sincroniza solo los archivos para la web
+          # Limpiamos variables para evitar errores de sintaxis
+          USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
+          HOST=$(echo "${{ secrets.DEPLOY_HOST }}" | xargs)
+          
           rsync -avz --delete \
-            -e "ssh -i ~/.ssh/id_ed25519" \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
             --exclude '.git*' \
             --exclude '.github*' \
             --exclude 'node_modules/' \
-            ${{ env.WEB_SOURCE }} ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:/var/www/astro-site/
+            ${{ env.WEB_SOURCE }} ${USER}@${HOST}:/var/www/astro-site/
 
       - name: 2. Sync Source Code to /opt/Sitio (Almacén)
         shell: bash
         run: |
-          # Sincroniza TODO el repositorio (excepto .git para ahorrar espacio)
-          # Primero creamos la carpeta si no existe
-          ssh -i ~/.ssh/id_ed25519 ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "sudo mkdir -p /opt/Sitio && sudo chown -R ${{ secrets.DEPLOY_USER }}:${{ secrets.DEPLOY_USER }} /opt/Sitio"
+          USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
+          HOST=$(echo "${{ secrets.DEPLOY_HOST }}" | xargs)
+          
+          # Crear carpeta con sudo si es necesario y dar permisos al usuario
+          ssh -i ~/.ssh/id_ed25519 ${USER}@${HOST} "sudo mkdir -p /opt/Sitio && sudo chown -R ${USER}:${USER} /opt/Sitio"
           
           rsync -avz --delete \
-            -e "ssh -i ~/.ssh/id_ed25519" \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
             --exclude '.git/' \
-            ./ ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:/opt/Sitio/
+            ./ ${USER}@${HOST}:/opt/Sitio/
 
       - name: Fix Permissions
         shell: bash
         run: |
-          ssh -i ~/.ssh/id_ed25519 ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "chmod -R 755 /var/www/astro-site /opt/Sitio"
+          USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
+          HOST=$(echo "${{ secrets.DEPLOY_HOST }}" | xargs)
+          ssh -i ~/.ssh/id_ed25519 ${USER}@${HOST} "chmod -R 755 /var/www/astro-site /opt/Sitio"
