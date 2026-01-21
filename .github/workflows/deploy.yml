@@ -1,9 +1,10 @@
-name: Deploy Astro (mscrya)
+name: Universal Deploy (Astro or Static)
 
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
+
 jobs:
   deploy:
     runs-on: [self-hosted, astro]
@@ -12,33 +13,56 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build Astro
-        run: npm run build
+      - name: Detect and Build Project
+        id: build_step
+        shell: bash
+        run: |
+          if [ -f "package.json" ]; then
+            echo "--- PROYECTO ASTRO DETECTADO ---"
+            npm ci
+            npm run build
+            # Definimos que el origen es la carpeta dist generada
+            echo "SOURCE_DIR=dist/" >> $GITHUB_ENV
+          else
+            echo "--- PROYECTO ESTÁTICO DETECTADO ---"
+            # Definimos que el origen es la raíz del repo
+            echo "SOURCE_DIR=./" >> $GITHUB_ENV
+          fi
 
       - name: Setup SSH key
         shell: bash
         run: |
           mkdir -p ~/.ssh
-          cat > ~/.ssh/id_ed25519 <<'EOF'
-          ${{ secrets.SSH_PRIVATE_KEY }}
-          EOF
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
+          HOST=$(echo "${{ secrets.DEPLOY_HOST }}" | xargs)
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
 
-      - name: Deploy dist to server
+      - name: Deploy via Rsync
         shell: bash
         run: |
           set -e
-          HOST="$(echo "${{ secrets.DEPLOY_HOST }}" | tr -d '\r\n' | xargs)"
-          USER="$(echo "${{ secrets.DEPLOY_USER }}" | tr -d '\r\n' | xargs)"
-          PATH_="$(echo "${{ secrets.DEPLOY_PATH }}" | tr -d '\r\n' | xargs)"
+          HOST=$(echo "${{ secrets.DEPLOY_HOST }}" | xargs)
+          USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
+          # Ruta destino final solicitada
+          DEST_PATH="/var/www/astro-site"
           
-          echo "Deploying to: ${USER}@${HOST}:${PATH_}"
+          echo "Publicando desde: ${{ env.SOURCE_DIR }}"
+          echo "Hacia: ${USER}@${HOST}:${DEST_PATH}"
           
-          rsync -avz --delete -e "ssh -i ~/.ssh/id_ed25519" dist/ "${USER}@${HOST}:${PATH_}/"
+          # Sincronización inteligente
+          # El '/' al final de SOURCE_DIR es clave para copiar CONTENIDO y no la CARPETA
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_ed25519" \
+            --exclude '.git*' \
+            --exclude '.github*' \
+            --exclude 'node_modules/' \
+            ${{ env.SOURCE_DIR }} "${USER}@${HOST}:${DEST_PATH}/"
+
+      - name: Fix Permissions
+        shell: bash
+        run: |
+          HOST=$(echo "${{ secrets.DEPLOY_HOST }}" | xargs)
+          USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
+          # Aseguramos que los archivos pertenezcan al usuario y sean legibles
+          ssh -i ~/.ssh/id_ed25519 "${USER}@${HOST}" "sudo chown -R mscrya:mscrya /var/www/astro-site && chmod -R 755 /var/www/astro-site"
