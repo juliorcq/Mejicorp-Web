@@ -1,4 +1,4 @@
-name: Publicación Automática de Página Web
+name: Publicacion Automatica de Pagina Web
 
 on:
   push:
@@ -13,26 +13,54 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Detect and Build
-        id: build_step
+      # 1. Verificar existencia de archivos ANTES de instalar nada
+      - name: Check for Files
+        id: check_files
         shell: bash
         run: |
-
           if [ ! -f "package.json" ] && [ ! -f "index.html" ]; then
-            echo "REPOSITORIO VACÍO: No hay archivos web. Saltando publicación."
+            echo "REPOSITORIO VACIO: Se saltaran todos los pasos."
             echo "HAS_FILES=false" >> $GITHUB_ENV
           else
+            echo "Archivos detectados. Continuando..."
             echo "HAS_FILES=true" >> $GITHUB_ENV
+          fi
+
+      # 2. Setup Node (Solo se ejecuta si hay archivos)
+    
+      - name: Setup Node.js with Cache
+        if: env.HAS_FILES == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          # Esta linea evita que falle si no hay package-lock.json pero si hay package.json
+          cache-dependency-path: package-lock.json
+
+      # 3. Construccion (Solo si hay archivos)
+      - name: Build Project
+        if: env.HAS_FILES == 'true'
+        shell: bash
+        run: |
+            # Logica de construccion
             if [ -f "package.json" ]; then
-              echo "--- MODO ASTRO ---"
-              npm ci && npm run build
-              echo "WEB_SOURCE=dist/" >> $GITHUB_ENV
+              echo "MODO ASTRO / NODE"
+              npm ci
+              npm run build --if-present
+              
+              # Verifica si se creo la carpeta dist o build
+              if [ -d "dist" ]; then
+                echo "WEB_SOURCE=dist/" >> $GITHUB_ENV
+              elif [ -d "build" ]; then
+                 echo "WEB_SOURCE=build/" >> $GITHUB_ENV
+              else
+                 echo "WEB_SOURCE=./" >> $GITHUB_ENV
+              fi
             else
-              echo "--- MODO ESTÁTICO ---"
+              echo "MODO ESTATICO"
               echo "WEB_SOURCE=./" >> $GITHUB_ENV
             fi
-          fi
-      
+
       - name: Setup SSH
         if: env.HAS_FILES == 'true'
         shell: bash
@@ -42,7 +70,7 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: 1. Deploy to Web (Publicación)
+      - name: 1. Deploy to Web (Publicacion)
         if: env.HAS_FILES == 'true'
         shell: bash
         run: |
@@ -56,7 +84,7 @@ jobs:
             --exclude 'node_modules/' \
             ${{ env.WEB_SOURCE }} ${USER}@${HOST}:/var/www/astro-site/
 
-      - name: 2. Sync Source Code to Home (Almacén)
+      - name: 2. Sync Source Code to Home (Almacen)
         if: env.HAS_FILES == 'true'
         shell: bash
         run: |
@@ -68,6 +96,7 @@ jobs:
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
             --exclude '.git/' \
+            --exclude 'node_modules/' \
             ./ ${USER}@${HOST}:~/Sitio/
 
       - name: Fix Permissions
