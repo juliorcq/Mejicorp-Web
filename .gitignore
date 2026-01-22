@@ -22,3 +22,8 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# git commands
+git add .
+git commit -m "Day X: descripción corta del avance"
+git push
