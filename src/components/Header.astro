@@ -1,0 +1,22 @@
+---
+const currentPath = Astro.url.pathname;
+---
+
+<header class="w-full border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    
+    <!-- Logo / Nombre -->
+    <div class="text-xl font-semibold tracking-tight">
+      Mejicorp
+    </div>
+
+    <!-- Navegación -->
+    <nav class="hidden md:flex gap-8 text-sm">
+        <a href="/"class={currentPath === "/" ? "font-semibold" : "hover:text-gray-600"}>Inicio</a>
+        <a href="/"class={currentPath === "/" ? "font-semibold" : "hover:text-gray-600"}>Servicios</a>
+        <a href="/"class={currentPath === "/" ? "font-semibold" : "hover:text-gray-600"}>Nosotros</a>
+        <a href="/"class={currentPath === "/" ? "font-semibold" : "hover:text-gray-600"}>Contacto</a>
+    </nav>
+
+  </div>
+</header>

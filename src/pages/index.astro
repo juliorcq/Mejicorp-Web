@@ -1,26 +1,23 @@
 ---
+import MainLayout from "../layouts/MainLayout.astro";
+import Header from "../components/Header.astro";
 import "../styles/global.css";
+import Footer from "../components/Footer.astro";
 ---
-<html lang="es">
-  <body class="bg-gray-100">
-    <main class="flex flex-col items-center justify-center">
-      <h1 class="text-5xl font-bold text-gray-900 mb-20">
-        Mejicorp Web
-      </h1>
-	  <p class="text-2xl font-bold text-gray-900">Bienvenido a la web de Mejicorp</p>
-	  <h2 class="text-2xl font-bold text-gray-900">Nuestros servicios</h2>
-	  <ul>
-		<li>Desarrollo de software</li>
-		<li>Diseño de paginas web</li>
-		<li>Marketing digital</li>
-		<li>Entre otros</li>
-	  </ul>	
+
+<MainLayout title="Mejicorp Web">
+  <Header />
+
+  <main class="max-w-7xl mx-auto px-6 py-20">
+    <h1 class="text-5xl font-bold tracking-tight mb-6">
+      Soluciones digitales para empresas modernas
+    </h1>
+
+    <p class="text-lg text-gray-600 max-w-2xl">
+      En Mejicorp desarrollamos soluciones tecnológicas enfocadas en
+      rendimiento, escalabilidad y experiencia de usuario.
+    </p>
   </main>
-	<footer class="flex flex-col items-center justify-center bg-gray-900 text-white p-10">
-		<p class="text-2xl font-bold text-white">Derechos reservados &copy; 2026 Mejicorp</p>
-		<p class="text-2xl font-bold text-white">Tel: 1234567890</p>
-		<p class="text-2xl font-bold text-white">Email: info@mejicorp.com</p>
-		<p class="text-2xl font-bold text-white">Dirección: Calle 123, Ciudad, País</p>
-	</footer>
-  </body>
-</html>
+
+  <Footer />
+</MainLayout>
