@@ -3,20 +3,14 @@ import MainLayout from "../layouts/MainLayout.astro";
 import Header from "../components/Header.astro";
 import "../styles/global.css";
 import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
 ---
 
 <MainLayout title="Mejicorp Web">
   <Header />
 
   <main class="max-w-7xl mx-auto px-6 py-20">
-    <h1 class="text-5xl font-bold tracking-tight mb-6">
-      Soluciones digitales para empresas modernas
-    </h1>
-
-    <p class="text-lg text-gray-600 max-w-2xl">
-      En Mejicorp desarrollamos soluciones tecnológicas enfocadas en
-      rendimiento, escalabilidad y experiencia de usuario.
-    </p>
+    <Hero />
   </main>
 
   <Footer />
