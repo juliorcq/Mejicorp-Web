@@ -1,5 +1,6 @@
 ---
 const { title = "Mejicorp Web" } = Astro.props;
+import Header from "../components/Header.astro";
 ---
 
 <!DOCTYPE html>
@@ -19,6 +20,8 @@ const { title = "Mejicorp Web" } = Astro.props;
 
   </head>
   <body class="font-sans text-gray-900 bg-white">
+    <Header />
     <slot />
+  </main>
   </body>
 </html>

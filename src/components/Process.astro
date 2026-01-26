@@ -1,0 +1,76 @@
+---
+const steps = [
+  {
+    step: "01",
+    title: "Análisis estratégico",
+    description:
+      "Comprensión de los objetivos del proyecto, el público objetivo y los requerimientos técnicos necesarios.",
+  },
+  {
+    step: "02",
+    title: "Diseño UX/UI",
+    description:
+      "Definición de la estructura visual, jerarquía de contenido y experiencia de usuario.",
+  },
+  {
+    step: "03",
+    title: "Desarrollo",
+    description:
+      "Implementación técnica utilizando tecnologías modernas con enfoque en rendimiento y mantenibilidad.",
+  },
+  {
+    step: "04",
+    title: "Optimización y despliegue",
+    description:
+      "Pruebas finales, optimización SEO y despliegue en infraestructura propia.",
+  },
+];
+---
+
+<section id="proceso" class="py-32 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Header editorial -->
+    <div class="max-w-2xl mb-20">
+      <span class="text-sm uppercase tracking-widest text-gray-500">
+        Metodología
+      </span>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-3">
+        Proceso de trabajo
+      </h2>
+      <p class="text-lg text-gray-600 mt-6 leading-relaxed">
+        Un enfoque estructurado que permite desarrollar soluciones digitales
+        claras, eficientes y escalables.
+      </p>
+    </div>
+
+    <!-- Steps -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      {steps.map((item) => (
+        <div
+          class="group bg-white rounded-3xl p-10
+                 border border-gray-200
+                 hover:border-blue-600
+                 transition-all duration-300"
+        >
+          <span
+            class="block text-5xl font-bold text-gray-200
+                   group-hover:text-blue-600
+                   transition-colors"
+          >
+            {item.step}
+          </span>
+
+          <h3 class="text-xl font-semibold text-gray-900 mt-6">
+            {item.title}
+          </h3>
+
+          <p class="text-gray-600 mt-4 leading-relaxed">
+            {item.description}
+          </p>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

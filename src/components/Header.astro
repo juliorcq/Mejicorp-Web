@@ -1,22 +1,67 @@
----
-const currentPath = Astro.url.pathname;
----
+<header
+  class="fixed top-0 left-0 w-full z-50
+         bg-white/70 backdrop-blur-md
+         border-b border-gray-200/50"
+>
+  <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
 
-<header class="w-full border-b border-gray-200">
-  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-    
-    <!-- Logo / Nombre -->
-    <div class="text-xl font-semibold tracking-tight">
+    <!-- Logo / Marca -->
+    <a
+      href="/"
+      class="text-lg font-semibold tracking-wide text-gray-900
+             hover:text-blue-600 transition-colors"
+    >
       Mejicorp
-    </div>
+    </a>
 
     <!-- Navegación -->
-    <nav class="hidden md:flex gap-8 text-sm">
-        <a href="/"class={currentPath === "/" ? "font-semibold" : "hover:text-gray-600"}>Inicio</a>
-        <a href="/"class={currentPath === "/" ? "font-semibold" : "hover:text-gray-600"}>Servicios</a>
-        <a href="/"class={currentPath === "/" ? "font-semibold" : "hover:text-gray-600"}>Nosotros</a>
-        <a href="/"class={currentPath === "/" ? "font-semibold" : "hover:text-gray-600"}>Contacto</a>
+    <nav class="hidden md:flex items-center gap-10 text-sm text-gray-700">
+      <a
+        href="#servicios"
+        class="relative group"
+      >
+        <span class="group-hover:text-blue-600 transition">
+          Servicios
+        </span>
+        <span
+          class="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-blue-600
+                 group-hover:w-full transition-all duration-300"
+        ></span>
+      </a>
+
+      <a href="#proceso" class="relative group">
+        <span class="group-hover:text-blue-600 transition">
+          Proceso
+        </span>
+        <span
+          class="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-blue-600
+                 group-hover:w-full transition-all duration-300"
+        ></span>
+      </a>
+
+      <a href="/contacto" class="relative group">
+        <span class="group-hover:text-blue-600 transition">
+          Contacto
+        </span>
+        <span
+          class="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-blue-600
+                 group-hover:w-full transition-all duration-300"
+        ></span>
+      </a>
+      
     </nav>
+
+    <!-- CTA -->
+    <a
+      href="#contacto"
+      class="hidden md:inline-flex items-center px-5 py-2
+             rounded-full border border-gray-300
+             text-sm font-medium text-gray-800
+             hover:border-blue-600 hover:text-blue-600
+             transition-all"
+    >
+      Hablemos
+    </a>
 
   </div>
 </header>

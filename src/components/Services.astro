@@ -1,0 +1,25 @@
+---
+const services = [
+  { title: "UX/UI", desc: "Diseño claro, accesible y centrado en el usuario." },
+  { title: "Frontend", desc: "Desarrollo web moderno y optimizado." },
+  { title: "SEO", desc: "Estructura semántica y buenas prácticas." },
+  { title: "Performance", desc: "Carga rápida y bajo consumo de recursos." },
+];
+---
+
+<section id="servicios" class="py-32 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">
+      Servicios
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {services.map(s => (
+        <div class="bg-white p-8 rounded-2xl shadow-sm">
+          <h3 class="text-xl font-semibold mb-3">{s.title}</h3>
+          <p class="text-gray-600">{s.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
