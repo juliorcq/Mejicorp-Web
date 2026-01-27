@@ -13,42 +13,39 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      # 1. Verificar existencia de archivos ANTES de instalar nada
-      - name: Check for Files
-        id: check_files
+      # 1. ANALISIS: Detecta si el repo es Node o Estático
+      - name: Analyze Repository
+        id: analyze
         shell: bash
         run: |
           if [ ! -f "package.json" ] && [ ! -f "index.html" ]; then
-            echo "REPOSITORIO VACIO: Se saltaran todos los pasos."
             echo "HAS_FILES=false" >> $GITHUB_ENV
+            echo "NEEDS_NODE=false" >> $GITHUB_ENV
           else
-            echo "Archivos detectados. Continuando..."
             echo "HAS_FILES=true" >> $GITHUB_ENV
+            if [ -f "package.json" ]; then
+               echo "NEEDS_NODE=true" >> $GITHUB_ENV
+            else
+               echo "NEEDS_NODE=false" >> $GITHUB_ENV
+            fi
           fi
 
-      # 2. Setup Node (Solo se ejecuta si hay archivos)
-    
-      - name: Setup Node.js with Cache
-        if: env.HAS_FILES == 'true'
+      # 2. Setup Node (SIN CACHE para máxima compatibilidad)
+      - name: Setup Node.js
+        if: env.NEEDS_NODE == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-          # Esta linea evita que falle si no hay package-lock.json pero si hay package.json
-          cache-dependency-path: package-lock.json
 
-      # 3. Construccion (Solo si hay archivos)
+      # 3. Construcción Universal
       - name: Build Project
         if: env.HAS_FILES == 'true'
         shell: bash
         run: |
-            # Logica de construccion
-            if [ -f "package.json" ]; then
-              echo "MODO ASTRO / NODE"
-              npm ci
+            if [ "${{ env.NEEDS_NODE }}" == "true" ]; then
+              npm install
               npm run build --if-present
               
-              # Verifica si se creo la carpeta dist o build
               if [ -d "dist" ]; then
                 echo "WEB_SOURCE=dist/" >> $GITHUB_ENV
               elif [ -d "build" ]; then
@@ -57,10 +54,13 @@ jobs:
                  echo "WEB_SOURCE=./" >> $GITHUB_ENV
               fi
             else
-              echo "MODO ESTATICO"
               echo "WEB_SOURCE=./" >> $GITHUB_ENV
             fi
+        env:
+          PUBLIC_GTM_ID: ${{ secrets.PUBLIC_GTM_ID }}
+          PUBLIC_GA_ID: ${{ secrets.PUBLIC_GA_ID }}
 
+      # 4. SSH Setup
       - name: Setup SSH
         if: env.HAS_FILES == 'true'
         shell: bash
@@ -70,35 +70,32 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: 1. Deploy to Web (Publicacion)
+      # 5. Despliegue a Producción
+      - name: 1. Deploy to Web
         if: env.HAS_FILES == 'true'
         shell: bash
         run: |
           USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
           HOST=$(echo "${{ secrets.DEPLOY_HOST }}" | xargs)
-          
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
-            --exclude '.git*' \
-            --exclude '.github*' \
-            --exclude 'node_modules/' \
+            --exclude '.git*' --exclude 'node_modules/' \
             ${{ env.WEB_SOURCE }} ${USER}@${HOST}:/var/www/astro-site/
 
-      - name: 2. Sync Source Code to Home (Almacen)
+      # 6. Backup de Código Fuente
+      - name: 2. Sync Source Code to Home
         if: env.HAS_FILES == 'true'
         shell: bash
         run: |
           USER=$(echo "${{ secrets.DEPLOY_USER }}" | xargs)
           HOST=$(echo "${{ secrets.DEPLOY_HOST }}" | xargs)
-          
           ssh -i ~/.ssh/id_ed25519 ${USER}@${HOST} "mkdir -p ~/Sitio"
-          
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
-            --exclude '.git/' \
-            --exclude 'node_modules/' \
+            --exclude '.git/' --exclude 'node_modules/' \
             ./ ${USER}@${HOST}:~/Sitio/
 
+      # 7. Permisos
       - name: Fix Permissions
         if: env.HAS_FILES == 'true'
         shell: bash
