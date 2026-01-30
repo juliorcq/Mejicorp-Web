@@ -3,17 +3,183 @@ import MainLayout from "../layouts/MainLayout.astro";
 ---
 
 <MainLayout title="Proceso de trabajo | Mejicorp">
-  <main class="max-w-5xl mx-auto px-6 py-32 space-y-20">
+  <main class="max-w-6xl mx-auto px-6 py-32 space-y-24">
 
-    <h1 class="text-4xl font-bold">Proceso de trabajo</h1>
+    <!-- TÍTULO -->
+    <section class="space-y-6">
+      <h1 class="text-4xl font-bold">Proceso de trabajo</h1>
+      <p class="text-lg text-gray-600 max-w-3xl">
+        Cada proyecto sigue una metodología clara y estructurada que permite
+        garantizar calidad, tiempos definidos y costos transparentes.
+      </p>
+    </section>
 
-    <ol class="space-y-10">
-      <li><strong>1.</strong> Análisis y objetivos</li>
-      <li><strong>2.</strong> Diseño UX/UI</li>
-      <li><strong>3.</strong> Desarrollo</li>
-      <li><strong>4.</strong> Optimización y SEO</li>
-      <li><strong>5.</strong> Lanzamiento</li>
-    </ol>
+    <!-- PROCESO -->
+    <section class="relative border-l-2 border-gray-200 pl-10 space-y-16">
+
+      <!-- STEP 1 -->
+      <div class="relative">
+        <span class="absolute -left-[34px] top-1 w-6 h-6 bg-blue-600 rounded-full"></span>
+
+        <div class="space-y-4">
+          <div class="flex items-center gap-4">
+            <img src="/images/Proceso_analisis.jpg" class="w-12 h-12" alt="Análisis y objetivos" />
+            <h3 class="text-xl font-semibold">1. Análisis y objetivos</h3>
+          </div>
+
+          <p class="text-gray-600 max-w-3xl">
+            Se evalúan las necesidades del cliente, público objetivo y
+            funcionalidades requeridas para definir el alcance real del proyecto.
+          </p>
+
+          <div class="grid sm:grid-cols-3 gap-6 text-sm">
+            <div class="bg-gray-50 p-4 rounded-xl">
+              ⏱ <strong>Duración:</strong><br />1 – 2 días
+            </div>
+            <div class="bg-gray-50 p-4 rounded-xl">
+              💰 <strong>Costo estimado:</strong><br />Incluido en el proyecto
+            </div>
+            <div class="bg-gray-50 p-4 rounded-xl">
+              📌 <strong>Resultado:</strong><br />Documento de alcance
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="relative">
+        <span class="absolute -left-[34px] top-1 w-6 h-6 bg-blue-600 rounded-full"></span>
+
+        <div class="space-y-4">
+          <div class="flex items-center gap-4">
+            <img src="/images/Proceso_diseño.jpg" class="w-12 h-12" alt="Diseño UX UI" />
+            <h3 class="text-xl font-semibold">2. Diseño UX / UI</h3>
+          </div>
+
+          <p class="text-gray-600 max-w-3xl">
+            Se construye la estructura visual del sitio, priorizando claridad,
+            navegación intuitiva y diseño responsive.
+          </p>
+
+          <div class="grid sm:grid-cols-3 gap-6 text-sm">
+            <div class="bg-gray-50 p-4 rounded-xl">
+              ⏱ <strong>Duración:</strong><br />2 – 4 días
+            </div>
+            <div class="bg-gray-50 p-4 rounded-xl">
+              💰 <strong>Costo estimado:</strong><br />S/ 300 – S/ 700
+            </div>
+            <div class="bg-gray-50 p-4 rounded-xl">
+              📌 <strong>Resultado:</strong><br />Prototipo aprobado
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="relative">
+        <span class="absolute -left-[34px] top-1 w-6 h-6 bg-blue-600 rounded-full"></span>
+
+        <div class="space-y-4">
+          <div class="flex items-center gap-4">
+            <img src="/images/Proceso_desarrollo.jpg" class="w-12 h-12" alt="Desarrollo web" />
+            <h3 class="text-xl font-semibold">3. Desarrollo</h3>
+          </div>
+
+          <p class="text-gray-600 max-w-3xl">
+            Implementación del proyecto utilizando tecnologías modernas,
+            priorizando rendimiento, seguridad y escalabilidad.
+          </p>
+
+          <div class="grid sm:grid-cols-3 gap-6 text-sm">
+            <div class="bg-gray-50 p-4 rounded-xl">
+              ⏱ <strong>Duración:</strong><br />5 – 10 días
+            </div>
+            <div class="bg-gray-50 p-4 rounded-xl">
+              💰 <strong>Costo estimado:</strong><br />S/ 800 – S/ 2,000
+            </div>
+            <div class="bg-gray-50 p-4 rounded-xl">
+              📌 <strong>Resultado:</strong><br />Sitio funcional
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="relative">
+        <span class="absolute -left-[34px] top-1 w-6 h-6 bg-blue-600 rounded-full"></span>
+
+        <div class="space-y-4">
+          <div class="flex items-center gap-4">
+            <img src="/images/Proceso_optimizacion.jpg" class="w-12 h-12" alt="Optimización SEO" />
+            <h3 class="text-xl font-semibold">4. Optimización y SEO</h3>
+          </div>
+
+          <p class="text-gray-600 max-w-3xl">
+            Optimización de imágenes, carga rápida, SEO técnico y accesibilidad
+            para mejorar visibilidad y experiencia.
+          </p>
+
+          <div class="grid sm:grid-cols-3 gap-6 text-sm">
+            <div class="bg-gray-50 p-4 rounded-xl">
+              ⏱ <strong>Duración:</strong><br />2 – 3 días
+            </div>
+            <div class="bg-gray-50 p-4 rounded-xl">
+              💰 <strong>Costo estimado:</strong><br />S/ 300 – S/ 600
+            </div>
+            <div class="bg-gray-50 p-4 rounded-xl">
+              📌 <strong>Resultado:</strong><br />Sitio optimizado
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="relative">
+        <span class="absolute -left-[34px] top-1 w-6 h-6 bg-blue-600 rounded-full"></span>
+
+        <div class="space-y-4">
+          <div class="flex items-center gap-4">
+            <img src="/images/Proceso_lanzamiento.jpg" class="w-12 h-12" alt="Lanzamiento" />
+            <h3 class="text-xl font-semibold">5. Lanzamiento</h3>
+          </div>
+
+          <p class="text-gray-600 max-w-3xl">
+            Publicación del proyecto, pruebas finales y entrega formal al cliente.
+          </p>
+
+          <div class="grid sm:grid-cols-3 gap-6 text-sm">
+            <div class="bg-gray-50 p-4 rounded-xl">
+              ⏱ <strong>Duración:</strong><br />1 día
+            </div>
+            <div class="bg-gray-50 p-4 rounded-xl">
+              💰 <strong>Costo estimado:</strong><br />Incluido
+            </div>
+            <div class="bg-gray-50 p-4 rounded-xl">
+              📌 <strong>Resultado:</strong><br />Proyecto publicado
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-gray-50 rounded-3xl p-10 text-center space-y-6">
+      <h2 class="text-2xl font-semibold">
+        ¿Quieres iniciar un proyecto?
+      </h2>
+      <p class="text-gray-600">
+        Solicita una cotización personalizada según tus necesidades.
+      </p>
+
+      <a
+        href="https://wa.me/923360859"
+        target="_blank"
+        class="inline-flex px-8 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition"
+      >
+        Solicitar cotización
+      </a>
+    </section>
 
   </main>
 </MainLayout>
