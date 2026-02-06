@@ -1,0 +1,57 @@
+---
+const benefits = [
+  {
+    title: "Código mantenible",
+    desc: "Arquitectura clara que facilita escalabilidad y futuras mejoras."
+  },
+  {
+    title: "SEO técnico",
+    desc: "Optimización semántica y rendimiento para mejor posicionamiento."
+  },
+  {
+    title: "Alta performance",
+    desc: "Carga rápida y experiencia fluida en todos los dispositivos."
+  },
+  {
+    title: "Soporte continuo",
+    desc: "Acompañamiento después del lanzamiento del proyecto."
+  }
+];
+---
+
+<section class="py-32 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="max-w-2xl mb-20">
+      <span class="text-sm uppercase tracking-widest text-gray-500">
+        Valor agregado
+      </span>
+
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-3">
+        Enfoque profesional
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+
+      {benefits.map(b => (
+        <div
+          class="bg-white rounded-3xl p-10
+                 border border-gray-200
+                 hover:border-blue-600
+                 transition-all duration-300"
+        >
+          <h3 class="text-lg font-semibold text-gray-900">
+            {b.title}
+          </h3>
+
+          <p class="text-gray-600 mt-4 leading-relaxed">
+            {b.desc}
+          </p>
+        </div>
+      ))}
+
+    </div>
+
+  </div>
+</section>

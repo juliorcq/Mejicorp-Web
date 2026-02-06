@@ -1,69 +1,122 @@
 <header
+  id="siteHeader"
   class="fixed top-0 left-0 w-full z-50
          bg-white/70 backdrop-blur-md
-         border-b border-gray-200/50"
+         border-b border-gray-200/50
+         transition-all duration-300"
 >
-  <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+  <div class="reveal">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      
 
-    <!-- Logo / Marca -->
-    <a
-      href="/"
-      class="flex items-center gap-3 group"
-    >
-      <img
-        src="/images/logo.png"
-        alt="Mejicorp"
-        class="h-9 w-auto transition-transform duration-300
-               group-hover:scale-105"
-        loading="eager"
-      />
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3 group">
+        <img
+          src="/images/logo.png"
+          alt="Mejicorp logo"
+          class="h-9 w-auto transition-transform duration-300 group-hover:scale-105"
+          loading="eager"
+        />
 
-      <span
-        class="text-lg font-semibold tracking-wide text-gray-900
-               group-hover:text-blue-600 transition-colors"
-      >
-        Mejicorp
-      </span>
-    </a>
-
-    <!-- Navegación -->
-    <nav class="hidden md:flex items-center gap-10 text-sm text-gray-700">
-      <a href="/servicios" class="relative group">
-        <span class="group-hover:text-blue-600 transition">Servicios</span>
-        <span class="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-blue-600
-                     group-hover:w-full transition-all duration-300"></span>
-      </a>
-
-      <a href="/proceso" class="relative group">
-        <span class="group-hover:text-blue-600 transition">Proceso</span>
-        <span class="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-blue-600
-                     group-hover:w-full transition-all duration-300"></span>
-      </a>
-
-      <a href="/contacto" class="relative group">
-        <span class="group-hover:text-blue-600 transition">
-          Contacto
-        </span>
         <span
-          class="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-blue-600
-                 group-hover:w-full transition-all duration-300"
-        ></span>
+          class="text-lg font-semibold tracking-wide text-gray-900
+                group-hover:text-blue-600 transition-colors"
+        >
+          Mejicorp
+        </span>
       </a>
-    </nav>
 
-    <!-- CTA -->
-    <a
-      href="https://wa.me/923360859?text=Hola%20quiero%20información%20sobre%20sus%20servicios"
-      target="_blank"
-      rel="noopener"
-      class="hidden md:inline-flex items-center px-5 py-2
-             rounded-full border border-gray-300
-             text-sm font-medium text-gray-800
-             hover:border-blue-600 hover:text-blue-600
-             transition-all"
+      <!-- NAV DESKTOP -->
+      <nav class="hidden md:flex items-center gap-10 text-sm text-gray-700">
+
+        <a href="/servicios" class="relative group">
+          <span class="group-hover:text-blue-600 transition">Servicios</span>
+          <span class="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-blue-600
+                      group-hover:w-full transition-all duration-300"></span>
+        </a>
+
+        <a href="/proceso" class="relative group">
+          <span class="group-hover:text-blue-600 transition">Proceso</span>
+          <span class="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-blue-600
+                      group-hover:w-full transition-all duration-300"></span>
+        </a>
+
+        <a href="/contacto" class="relative group">
+          <span class="group-hover:text-blue-600 transition">Contacto</span>
+          <span class="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-blue-600
+                      group-hover:w-full transition-all duration-300"></span>
+        </a>
+        <a href="/proyectos" class="relative group">
+          <span class="group-hover:text-blue-600 transition">Proyectos</span>
+          <span class="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-blue-600
+                      group-hover:w-full transition-all duration-300"></span>
+        </a>
+      </nav>
+      
+
+      <!-- CTA DESKTOP -->
+      <a
+        href="https://wa.me/923360859?text=Hola%20quiero%20información%20sobre%20sus%20servicios"
+        target="_blank"
+        rel="noopener"
+        class="hidden md:inline-flex items-center px-5 py-2
+              rounded-full border border-gray-300
+              text-sm font-medium text-gray-800
+              hover:border-blue-600 hover:text-blue-600
+              transition-all"
+      >
+        Hablemos
+      </a>
+
+      <!-- BOTÓN HAMBURGUESA -->
+      <button
+        id="menuBtn"
+        class="md:hidden text-2xl text-gray-800"
+        aria-label="Abrir menú"
+      >
+        ☰
+      </button>
+    </div>
+
+    <!-- MENÚ MÓVIL -->
+    <div
+      id="mobileMenu"
+      class="hidden md:hidden bg-white border-t border-gray-200
+            px-6 py-6 space-y-5 text-gray-700 shadow-lg"
     >
-      Hablemos
-    </a>
+      <a href="/servicios" class="block hover:text-blue-600">Servicios</a>
+      <a href="/proceso" class="block hover:text-blue-600">Proceso</a>
+      <a href="/contacto" class="block hover:text-blue-600">Contacto</a>
 
+      <a
+        href="https://wa.me/923360859?text=Hola%20quiero%20información%20sobre%20sus%20servicios"
+        target="_blank"
+        class="inline-block mt-4 px-5 py-2 rounded-full
+              bg-blue-600 text-white text-sm"
+      >
+        Hablemos
+      </a>
+    </div>
   </div>
+    <!-- JS -->
+    <script>
+      const btn = document.getElementById('menuBtn');
+      const menu = document.getElementById('mobileMenu');
+      const header = document.getElementById('siteHeader');
+
+      // toggle menú móvil
+      btn?.addEventListener('click', () => {
+        menu?.classList.toggle('hidden');
+      });
+
+      // efecto header al hacer scroll
+      window.addEventListener('scroll', () => {
+        if (!header) return;
+        if (window.scrollY > 30) {
+          header.classList.add('bg-white', 'shadow-md');
+        } else {
+          header.classList.remove('bg-white', 'shadow-md');
+        }
+      });
+    </script>
 </header>

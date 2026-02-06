@@ -10,22 +10,17 @@ const description =
 <MainLayout title={title} description={description}>
   <section class="relative min-h-screen overflow-hidden bg-white py-32">
 
-    <!-- Fondos decorativos elegantes -->
+    <!-- Fondos elegantes -->
     <div class="absolute inset-0 -z-10">
-      <div class="absolute top-[-12rem] right-[-12rem]
-                  w-[30rem] h-[30rem]
-                  bg-blue-100 rounded-full blur-3xl opacity-60"></div>
-
-      <div class="absolute bottom-[-12rem] left-[-12rem]
-                  w-[26rem] h-[26rem]
-                  bg-indigo-100 rounded-full blur-3xl opacity-60"></div>
+      <div class="absolute top-[-12rem] right-[-12rem] w-[30rem] h-[30rem] bg-blue-100 rounded-full blur-3xl opacity-60"></div>
+      <div class="absolute bottom-[-12rem] left-[-12rem] w-[26rem] h-[26rem] bg-indigo-100 rounded-full blur-3xl opacity-60"></div>
     </div>
 
     <div class="max-w-5xl mx-auto px-6">
 
-      <!-- Header editorial -->
+      <!-- Header -->
       <header class="max-w-2xl mb-20">
-        <span class="inline-block text-sm uppercase tracking-widest text-gray-500">
+        <span class="text-sm uppercase tracking-widest text-gray-500">
           Contacto
         </span>
 
@@ -34,193 +29,171 @@ const description =
           <span class="text-blue-600 block">proyecto digital</span>
         </h1>
 
-        <p class="text-lg text-gray-600 mt-6 leading-relaxed">
-          Cuéntame qué necesitas y te responderé con una propuesta clara,
-          realista y alineada a tus objetivos.
+        <p class="text-lg text-gray-600 mt-6">
+          Completa el formulario y recibirás una respuesta en menos de 24 horas.
         </p>
       </header>
 
-      <!-- Contenedor formulario -->
-      <div class="grid lg:grid-cols-3 gap-16 items-start">
+      <div class="grid lg:grid-cols-3 gap-16">
 
-        <!-- Info lateral -->
-        <aside class="space-y-8">
-          <div>
-            <h3 class="font-semibold text-gray-900 mb-2">
-              ¿Qué puedes solicitar?
+        <!-- INFO LATERAL -->
+        <aside class="space-y-10">
+
+          <!-- Qué incluye -->
+          <div class="p-6 rounded-2xl bg-gray-50 border">
+            <h3 class="font-semibold text-gray-900 mb-3">
+              Tu cotización incluye
             </h3>
-            <ul class="space-y-2 text-gray-600 text-sm">
-              <li>• Desarrollo web corporativo</li>
-              <li>• Landing pages optimizadas</li>
-              <li>• UX / UI y diseño visual</li>
-              <li>• Optimización SEO y performance</li>
-              <li>• Asesoría técnica</li>
+        
+            <ul class="text-sm text-gray-600 space-y-2">
+              <li>✓ Análisis de requerimientos</li>
+              <li>✓ Alcance del proyecto</li>
+              <li>✓ Tiempo estimado</li>
+              <li>✓ Presupuesto detallado</li>
+              <li>✓ Tecnologías recomendadas</li>
             </ul>
           </div>
-
-          <div class="p-6 rounded-2xl bg-gray-50 border">
-            <p class="text-sm text-gray-600 leading-relaxed">
-              Normalmente respondo en menos de
-              <strong class="text-gray-900"> 24 horas</strong>.
-              Toda la información compartida es confidencial.
+        
+          <!-- Tiempos -->
+          <div>
+            <h4 class="font-medium text-gray-900 mb-3">
+              Tiempos promedio
+            </h4>
+        
+            <div class="space-y-3 text-sm text-gray-600">
+              <p>Landing page → 3–5 días</p>
+              <p>Sitio corporativo → 1–2 semanas</p>
+              <p>Sistema web → según alcance</p>
+            </div>
+          </div>
+        
+          <!-- Qué enviar -->
+          <div>
+            <h4 class="font-medium text-gray-900 mb-3">
+              Para ayudarte mejor, envía:
+            </h4>
+        
+            <ul class="text-sm text-gray-600 space-y-2">
+              <li>• Objetivo del proyecto</li>
+              <li>• Referencias o ejemplos</li>
+              <li>• Presupuesto aproximado</li>
+              <li>• Fecha límite</li>
+            </ul>
+          </div>
+        
+          <!-- Confianza -->
+          <div class="p-6 rounded-2xl bg-blue-50 border border-blue-100">
+            <p class="text-sm text-blue-900">
+              Respuesta en menos de 24h.  
+              Sin spam. Comunicación directa.
             </p>
           </div>
+        
         </aside>
+        
 
-        <!-- Formulario -->
+        <!-- FORM -->
         <form
-          class="lg:col-span-2 bg-white rounded-3xl border p-10 shadow-sm space-y-8"
+          id="contactForm"
+          class="lg:col-span-2 bg-white rounded-3xl border p-10 shadow-sm space-y-6"
         >
 
-          <!-- Nombre -->
-          <div class="space-y-2">
-            <label class="text-sm font-medium text-gray-700">
-              Nombre completo
-            </label>
-            <input
-              type="text"
-              placeholder="Tu nombre"
-              required
-              class="w-full rounded-xl border border-gray-300 px-4 py-3
-                     focus:outline-none focus:border-blue-600"
-            />
-          </div>
+          <input name="name" required placeholder="Nombre completo"
+            class="w-full rounded-xl border px-4 py-3 focus:border-blue-600 outline-none" />
 
-          <!-- Correo -->
-          <div class="space-y-2">
-            <label class="text-sm font-medium text-gray-700">
-              Correo electrónico
-            </label>
-            <input
-              type="email"
-              placeholder="correo@empresa.com"
-              required
-              class="w-full rounded-xl border border-gray-300 px-4 py-3
-                     focus:outline-none focus:border-blue-600"
-            />
-          </div>
+          <input name="email" type="email" required placeholder="Correo electrónico"
+            class="w-full rounded-xl border px-4 py-3 focus:border-blue-600 outline-none" />
 
-          <!-- Empresa -->
-          <div class="space-y-2">
-            <label class="text-sm font-medium text-gray-700">
-              Empresa u organización (opcional)
-            </label>
-            <input
-              type="text"
-              placeholder="Nombre de la empresa"
-              class="w-full rounded-xl border border-gray-300 px-4 py-3
-                     focus:outline-none focus:border-blue-600"
-            />
-          </div>
+          <input name="company" placeholder="Empresa (opcional)"
+            class="w-full rounded-xl border px-4 py-3 focus:border-blue-600 outline-none" />
 
-          <!-- Servicio -->
-          <div class="space-y-2">
-            <label class="text-sm font-medium text-gray-700">
-              Servicio de interés
-            </label>
-            <select
-              class="w-full rounded-xl border border-gray-300 px-4 py-3
-                     focus:outline-none focus:border-blue-600"
-            >
-              <option>Desarrollo web</option>
-              <option>Landing page</option>
-              <option>UX / UI</option>
-              <option>SEO & Performance</option>
-              <option>Asesoría técnica</option>
-            </select>
-          </div>
+          <select name="service"
+            class="w-full rounded-xl border px-4 py-3 focus:border-blue-600 outline-none">
+            <option>Desarrollo web</option>
+            <option>Landing page</option>
+            <option>UX/UI</option>
+            <option>SEO</option>
+            <option>Asesoría</option>
+          </select>
 
-          <!-- Presupuesto -->
-          <div class="space-y-2">
-            <label class="text-sm font-medium text-gray-700">
-              Presupuesto estimado
-            </label>
-            <select
-              class="w-full rounded-xl border border-gray-300 px-4 py-3
-                     focus:outline-none focus:border-blue-600"
-            >
-              <option>Menos de $500</option>
-              <option>$500 – $1,000</option>
-              <option>$1,000 – $3,000</option>
-              <option>Más de $3,000</option>
-            </select>
-          </div>
+          <select name="budget"
+            class="w-full rounded-xl border px-4 py-3 focus:border-blue-600 outline-none">
+            <option>Menos de S/.500</option>
+            <option>S/.500 – S/.1,000</option>
+            <option>S/.1,000 – S/.3,000</option>
+            <option>Más de S/.3,000</option>
+          </select>
 
-          <!-- Mensaje -->
-          <div class="space-y-2">
-            <label class="text-sm font-medium text-gray-700">
-              Detalles del proyecto
-            </label>
-            <textarea
-              rows="5"
-              placeholder="Cuéntame qué necesitas, plazos, ideas, etc."
-              required
-              class="w-full rounded-xl border border-gray-300 px-4 py-3
-                     focus:outline-none focus:border-blue-600 resize-none"
-            ></textarea>
-          </div>
+          <textarea
+            name="message"
+            rows="5"
+            required
+            placeholder="Cuéntame los detalles del proyecto..."
+            class="w-full rounded-xl border px-4 py-3 focus:border-blue-600 outline-none resize-none"
+          ></textarea>
 
-          <!-- Botón -->
-          <div class="pt-4">
+          <!-- BOTÓN -->
+          <div class="reveal">
             <button
-              type="submit"
-              class="inline-flex items-center gap-2 px-8 py-3
-                     rounded-full bg-blue-600 text-white font-medium
-                     hover:bg-blue-700 transition-all hover:scale-[1.02]"
+              id="submitBtn"
+              class="w-full bg-blue-600 text-white py-3 rounded-xl font-medium
+                    hover:bg-blue-700 transition flex justify-center gap-2"
             >
               Enviar mensaje
-              <i class="fas fa-arrow-right text-sm"></i>
+              <span id="loader" class="hidden animate-spin"></span>
             </button>
           </div>
-          <!-- Mensaje de confianza -->
-          <div class="pt-8 border-t border-gray-200 space-y-6">
 
-            <p class="text-sm text-gray-500 leading-relaxed">
-                🔒 Tu información es completamente confidencial.
-                No envío spam y respondo normalmente en menos de
-            <strong class="text-gray-700">24 horas</strong>.
-            </p>
+          <!-- MENSAJE -->
+          <p id="successMsg" class="hidden text-green-600 text-sm text-center">
+            Mensaje enviado correctamente. Te responderé pronto.
+          </p>
 
-            <!-- Proceso -->
-            <div class="grid sm:grid-cols-3 gap-6 text-sm text-gray-600">
+          <!-- confianza -->
+          <p class="text-xs text-gray-400 text-center pt-4">
+            Información confidencial. Sin spam.
+          </p>
 
-              <div class="flex gap-3">
-                <span class="text-blue-600 font-semibold">1.</span>
-                <p>Reviso tu mensaje y necesidades</p>
-              </div>
-
-              <div class="flex gap-3">
-                <span class="text-blue-600 font-semibold">2.</span>
-                <p>Te contacto con una propuesta clara</p>
-              </div>
-
-              <div class="flex gap-3">
-                <span class="text-blue-600 font-semibold">3.</span>
-                <p>Definimos tiempos y presupuesto</p>
-              </div>
-
-            </div>
-
-            <!-- WhatsApp -->
-            <div class="flex items-center gap-4 pt-4">
-              <span class="text-sm text-gray-500">
-                ¿Prefieres contacto directo?
-              </span>
-
-              <a
-                href="https://wa.me/519XXXXXXXX?text=Hola%20quiero%20información%20sobre%20un%20proyecto"
-                target="_blank"
-                rel="noopener"
-                class="inline-flex items-center gap-2 text-sm font-medium
-                      text-blue-600 hover:text-blue-700 transition"
-              >
-                <i class="fab fa-whatsapp text-base"></i>
-                Escríbeme por WhatsApp
-              </a>
-            </div>
-          </div>
         </form>
+        
       </div>
     </div>
-  </section>
+
+  <!-- EmailJS -->
+  <script is:inline src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  
+  <script is:inline>
+    emailjs.init("tFI5lnOf3xiNHr-Vz");
+  
+    const form = document.getElementById("contactForm");
+    const btn = document.getElementById("submitBtn");
+    const loader = document.getElementById("loader");
+    const success = document.getElementById("successMsg");
+  
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+  
+      btn.disabled = true;
+      loader.classList.remove("hidden");
+  
+      try {
+        await emailjs.sendForm(
+          "service_83d3w6b",
+          "template_1317hh2",
+          form
+        );
+  
+        form.reset();
+        success.classList.remove("hidden");
+  
+      } catch (err) {
+        alert("Error enviando mensaje");
+        console.error(err);
+      }
+  
+      loader.classList.add("hidden");
+      btn.disabled = false;
+    });
+  </script>
+  
 </MainLayout>

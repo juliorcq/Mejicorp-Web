@@ -1,0 +1,76 @@
+---
+import { Image } from "astro:assets";
+
+import p1 from "../assets/proyectos/proyecto_1.png";
+import p2 from "../assets/proyectos/proyecto_2.png";
+import p3 from "../assets/proyectos/proyecto_3.png";
+
+const proyectos = [
+  { img: p1, title: "Landing corporativa", stack: "Astro + Tailwind" },
+  { img: p2, title: "Sistema de inventario", stack: "Node + MongoDB" },
+  { img: p3, title: "Portal educativo", stack: "Laravel" },
+];
+---
+
+<section class="py-32 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Header igual que Process -->
+    <div class="max-w-2xl mb-20">
+      <span class="text-sm uppercase tracking-widest text-gray-500">
+        Portafolio
+      </span>
+
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-3">
+        Proyectos destacados
+      </h2>
+
+      <p class="text-lg text-gray-600 mt-6 leading-relaxed">
+        Algunos trabajos recientes enfocados en rendimiento,
+        experiencia de usuario y escalabilidad.
+      </p>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+
+      {proyectos.map(p => (
+        <a
+          href="/proyectos"
+          class="group bg-white rounded-3xl overflow-hidden
+                 border border-gray-200
+                 hover:border-blue-600
+                 transition-all duration-300"
+        >
+          <Image
+            src={p.img}
+            alt={p.title}
+            class="h-48 w-full object-cover"
+          />
+
+          <div class="p-8">
+            <h3 class="text-lg font-semibold text-gray-900">
+              {p.title}
+            </h3>
+
+            <p class="text-gray-500 text-sm mt-2">
+              {p.stack}
+            </p>
+          </div>
+        </a>
+      ))}
+
+    </div>
+
+    <!-- link simple -->
+    <div class="mt-16">
+      <a
+        href="/proyectos"
+        class="text-sm font-medium text-blue-600 hover:underline"
+      >
+        Ver todos los proyectos →
+      </a>
+    </div>
+
+  </div>
+</section>
