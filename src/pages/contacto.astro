@@ -94,106 +94,150 @@ const description =
 
         <!-- FORM -->
         <form
-          id="contactForm"
-          class="lg:col-span-2 bg-white rounded-3xl border p-10 shadow-sm space-y-6"
-        >
+            id="contactForm"
+            class="lg:col-span-2 bg-white rounded-3xl border border-gray-200
+                  p-10 md:p-12 shadow-lg space-y-10"
+          >
 
-          <input name="name" required placeholder="Nombre completo"
-            class="w-full rounded-xl border px-4 py-3 focus:border-blue-600 outline-none" />
+            <!-- grid -->
+            <div class="grid md:grid-cols-2 gap-8">
 
-          <input name="email" type="email" required placeholder="Correo electrónico"
-            class="w-full rounded-xl border px-4 py-3 focus:border-blue-600 outline-none" />
+              <!-- Nombre -->
+              <div class="space-y-2">
+                <label class="label">Nombre completo</label>
+                <input name="name" required class="input" placeholder="Juan Pérez" />
+              </div>
 
-          <input name="company" placeholder="Empresa (opcional)"
-            class="w-full rounded-xl border px-4 py-3 focus:border-blue-600 outline-none" />
+              <!-- Email -->
+              <div class="space-y-2">
+                <label class="label">Correo electrónico</label>
+                <input name="email" type="email" required class="input" placeholder="correo@empresa.com" />
+              </div>
 
-          <select name="service"
-            class="w-full rounded-xl border px-4 py-3 focus:border-blue-600 outline-none">
-            <option>Desarrollo web</option>
-            <option>Landing page</option>
-            <option>UX/UI</option>
-            <option>SEO</option>
-            <option>Asesoría</option>
-          </select>
+              <!-- Empresa -->
+              <div class="space-y-2">
+                <label class="label">Empresa (opcional)</label>
+                <input name="company" class="input" placeholder="Mi empresa SAC" />
+              </div>
 
-          <select name="budget"
-            class="w-full rounded-xl border px-4 py-3 focus:border-blue-600 outline-none">
-            <option>Menos de S/.500</option>
-            <option>S/.500 – S/.1,000</option>
-            <option>S/.1,000 – S/.3,000</option>
-            <option>Más de S/.3,000</option>
-          </select>
+              <!-- Servicio -->
+              <div class="space-y-2">
+                <label class="label">Servicio</label>
+                <select name="service" class="input">
+                  <option>Desarrollo web</option>
+                  <option>Landing page</option>
+                  <option>UX/UI</option>
+                  <option>SEO & Performance</option>
+                  <option>Sistema a medida</option>
+                </select>
+              </div>
 
-          <textarea
-            name="message"
-            rows="5"
-            required
-            placeholder="Cuéntame los detalles del proyecto..."
-            class="w-full rounded-xl border px-4 py-3 focus:border-blue-600 outline-none resize-none"
-          ></textarea>
+            </div>
 
-          <!-- BOTÓN -->
-          <div class="reveal">
-            <button
-              id="submitBtn"
-              class="w-full bg-blue-600 text-white py-3 rounded-xl font-medium
-                    hover:bg-blue-700 transition flex justify-center gap-2"
-            >
-              Enviar mensaje
-              <span id="loader" class="hidden animate-spin"></span>
-            </button>
-          </div>
+            <!-- Presupuesto ancho completo -->
+            <div class="space-y-2">
+              <label class="label">Presupuesto estimado</label>
+              <select name="budget" class="input">
+                <option>Menos de S/.500</option>
+                <option>S/.500 – S/.1,000</option>
+                <option>S/.1,000 – S/.3,000</option>
+                <option>Más de S/.3,000</option>
+              </select>
+            </div>
 
-          <!-- MENSAJE -->
-          <p id="successMsg" class="hidden text-green-600 text-sm text-center">
-            Mensaje enviado correctamente. Te responderé pronto.
-          </p>
+            <!-- Mensaje -->
+            <div class="space-y-2">
+              <label class="label">Detalles del proyecto</label>
+              <textarea
+                name="message"
+                rows="5"
+                required
+                class="input resize-none"
+                placeholder="Cuéntame objetivos, fechas, ideas o referencias..."
+              ></textarea>
+            </div>
 
-          <!-- confianza -->
-          <p class="text-xs text-gray-400 text-center pt-4">
-            Información confidencial. Sin spam.
-          </p>
+            <!-- CTA -->
+            <div class="pt-4 flex flex-col gap-4">
 
-        </form>
+              <button
+                id="submitBtn"
+                class="btn-primary flex justify-center items-center gap-3"
+              >
+                Enviar mensaje
+                <span id="loader" class="hidden animate-spin">⏳</span>
+              </button>
+
+              <p id="statusMsg" class="text-center text-sm hidden"></p>
+
+            </div>
+
+            <!-- Bloque elegante final -->
+            <div class="pt-8 border-t border-gray-200 grid sm:grid-cols-3 gap-6 text-xs text-gray-500">
+
+              <div class="flex gap-2">
+                <span>🔒</span>
+                <p>Datos confidenciales</p>
+              </div>
+
+              <div class="flex gap-2">
+                <span>⚡</span>
+                <p>Respuesta &lt; 24 horas</p>
+              </div>
+
+              <div class="flex gap-2">
+                <span>💬</span>
+                <p>Comunicación directa</p>
+              </div>
+
+            </div>
+
+          </form>
+
+
         
       </div>
     </div>
 
   <!-- EmailJS -->
-  <script is:inline src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  
   <script is:inline>
-    emailjs.init("tFI5lnOf3xiNHr-Vz");
-  
     const form = document.getElementById("contactForm");
     const btn = document.getElementById("submitBtn");
     const loader = document.getElementById("loader");
-    const success = document.getElementById("successMsg");
+    const statusMsg = document.getElementById("statusMsg");
   
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
   
-      btn.disabled = true;
       loader.classList.remove("hidden");
+      btn.disabled = true;
+  
+      const data = Object.fromEntries(new FormData(form));
   
       try {
-        await emailjs.sendForm(
-          "service_83d3w6b",
-          "template_1317hh2",
-          form
-        );
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+  
+        if (!res.ok) throw new Error();
   
         form.reset();
-        success.classList.remove("hidden");
   
-      } catch (err) {
-        alert("Error enviando mensaje");
-        console.error(err);
+        statusMsg.textContent = "Mensaje enviado correctamente";
+        statusMsg.className = "text-green-600 text-sm text-center";
+  
+      } catch {
+        statusMsg.textContent = "Error enviando mensaje";
+        statusMsg.className = "text-red-600 text-sm text-center";
       }
   
       loader.classList.add("hidden");
       btn.disabled = false;
     });
   </script>
+  
+  
   
 </MainLayout>
