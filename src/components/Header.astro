@@ -101,23 +101,24 @@
   </div>
     <!-- JS -->
     <script>
-      const btn = document.getElementById('menuBtn');
-      const menu = document.getElementById('mobileMenu');
-      const header = document.getElementById('siteHeader');
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("menuBtn");
+    const menu = document.getElementById("mobileMenu");
+    const header = document.getElementById("siteHeader");
 
-      // toggle menú móvil
-      btn?.addEventListener('click', () => {
-        menu?.classList.toggle('hidden');
-      });
+    btn?.addEventListener("click", () => {
+      menu?.classList.toggle("hidden");
+    });
 
-      // efecto header al hacer scroll
-      window.addEventListener('scroll', () => {
-        if (!header) return;
-        if (window.scrollY > 30) {
-          header.classList.add('bg-white', 'shadow-md');
-        } else {
-          header.classList.remove('bg-white', 'shadow-md');
-        }
-      });
-    </script>
+    window.addEventListener("scroll", () => {
+      if (!header) return;
+
+      if (window.scrollY > 30) {
+        header.classList.add("bg-white", "shadow-md");
+      } else {
+        header.classList.remove("bg-white", "shadow-md");
+      }
+    });
+  });
+</script>
 </header>
